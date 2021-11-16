@@ -15,5 +15,6 @@
     <orderEntry type="library" name="github.pengrad.java.telegram.bot.api" level="project" />
     <orderEntry type="library" name="telegram.telegrambots" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.22" level="project" />
+    <orderEntry type="library" name="jsoup-1.14.3" level="project" />
   </component>
 </module>
