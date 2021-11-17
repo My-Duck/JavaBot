@@ -9,7 +9,7 @@ import java.util.Hashtable;
 public class NewBotLogic implements IBotLogic {
     private String answer;
     public Hashtable<String, State> stateContainer = new Hashtable<String, State>();
-    public String handleMessage(String message, String userId) {
+    public String handleMessage(String userMessage, String userId) {
         if (!stateContainer.containsKey(userId)) {
             stateContainer.put(userId,new State());
         }
@@ -18,10 +18,12 @@ public class NewBotLogic implements IBotLogic {
             answer = NewMessagesFromBot.GetMessage(state.currentState);
             state.currentState = States.anecdote;
         } else if (state.currentState == States.anecdote) {
-            answer = NewAnecdotes.GetAnecdote();
+            answer = NewAnecdotes.FindAnecdote(userMessage);
             state.currentState = States.anecdote;
         }
+
         return answer;
     }
+
 }
 
