@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.api.IBotLogic;
 import com.company.api.State;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.DefaultAbsSender;
@@ -18,8 +19,8 @@ import java.util.Optional;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
-    public NewBotLogic logic;
-    public TelegramBot (NewBotLogic logic){
+    public IBotLogic logic;
+    public TelegramBot (IBotLogic logic){
         this.logic = logic;
     }
 
@@ -30,7 +31,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken(){
-        return "20";
+        return "8";
     }
 
 

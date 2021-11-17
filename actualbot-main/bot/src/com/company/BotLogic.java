@@ -1,11 +1,12 @@
 package com.company;
 
+import com.company.api.IBotLogic;
 import com.company.api.States;
 import com.company.api.State;
 
 import java.util.Hashtable;
 
-public class BotLogic {
+public class BotLogic implements IBotLogic {
     private String answer;
     public Hashtable<String, State> stateContainer = new Hashtable<String, State>();
     public String handleMessage(String message, String userId) {
