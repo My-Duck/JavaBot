@@ -16,14 +16,28 @@ public class NewBotLogic implements IBotLogic {
         var state = stateContainer.get(userId);
         if (state.currentState == States.start) {
             answer = NewMessagesFromBot.GetMessage(state.currentState);
-            state.currentState = States.anecdote;
-        } else if (state.currentState == States.anecdote) {
-            answer = NewAnecdotes.FindAnecdote(userMessage);
-            state.currentState = States.anecdote;
+            state.currentState = States.choose;
         }
-
+        else if (state.currentState == States.choose){
+            if (userMessage == "1") {
+                answer = NewAnecdotes.GetRandomAnecdote();
+                state.currentState = States.wait;
+            }
+            else if (userMessage == "2") {
+                state.currentState = States.find;
+                answer = NewMessagesFromBot.GetMessage(state.currentState);
+            }
+            else answer = NewMessagesFromBot.GetMessage(state.currentState);
+        }
+        else if (state.currentState == States.find) {
+            answer = NewAnecdotes.FindAnecdote(userMessage);
+            state.currentState = States.wait;
+        }
+        else if (state.currentState == States.wait) {
+            answer = NewMessagesFromBot.GetMessage(state.currentState);
+            state.currentState = States.choose;
+        }
         return answer;
     }
 
 }
-

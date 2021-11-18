@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class NewAnecdotes {
     private static ArrayList<String> GetFromBash(String link) throws IOException {
         Document doc = Jsoup.connect(link).get();
-        doc.select("br").append("\\\n");
+        doc.select("br").append("\\n");
         Elements elements = doc.getElementsByAttributeValue("class","quote__body");
         elements.remove(0);
         ArrayList<String> listOfJokes = new ArrayList<String>();
