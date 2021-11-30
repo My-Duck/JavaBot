@@ -1,7 +1,4 @@
-package com.company;
-
-import java.util.Hashtable;
-import com.company.api.State;
+package com.company.old;
 
 public class Main {
     public static void main(String[] args) {

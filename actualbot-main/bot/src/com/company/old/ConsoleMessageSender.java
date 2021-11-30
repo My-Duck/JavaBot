@@ -1,4 +1,4 @@
-package com.company;
+package com.company.old;
 
 import com.company.api.IMessageReader;
 import com.company.api.IMessageSender;

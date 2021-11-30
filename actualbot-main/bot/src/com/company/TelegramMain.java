@@ -8,6 +8,6 @@ public class TelegramMain {
     @SneakyThrows
     public static void main(String[] args) {
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        telegramBotsApi.registerBot(new TelegramBot(new NewBotLogic()));
+        telegramBotsApi.registerBot(new TelegramBot(new BotLogic()));
     }
 }
