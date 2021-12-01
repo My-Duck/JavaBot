@@ -12,33 +12,28 @@ public class BotLogic implements IBotLogic {
     public Hashtable<String, User> userContainer = new Hashtable<String, User>();
     public String handleMessage(String userMessage, String userId) {
         if (!userContainer.containsKey(userId)) {
-            userContainer.put(userId,new User());
+            userContainer.put(userId, new User());
         }
         var user = userContainer.get(userId);
         if (user.state.currentState == States.start) {
             answer = MessagesFromBot.GetMessage(user.state.currentState);
-            user.state.currentState = States.choose;
+            user.state.currentState = States.wait_for_choose_type;
         }
-        else if (user.state.currentState == States.choose){
+        else if (user.state.currentState == States.wait_for_choose_type) {
             if (userMessage.equals("анекдот")) {
                 answer = Anecdotes.GetRandomAnecdote();
-                user.state.currentState = States.wait;
-            }
-            else if (userMessage.equals("слово")) {
-                user.state.currentState = States.find;
+                answer +="\n\n"+MessagesFromBot.GetMessage(States.wait_for_continuation);
+                user.state.currentState = States.wait_for_choose_type;
+            } else if (userMessage.equals("слово")) {
+                user.state.currentState = States.wait_for_key;
                 answer = MessagesFromBot.GetMessage(user.state.currentState);
-            }
-            else answer = MessagesFromBot.GetMessage(user.state.currentState);
+            } else answer = MessagesFromBot.GetMessage(user.state.currentState);
         }
-        else if (user.state.currentState == States.find) {
-            answer = Anecdotes.FindAnecdote(userMessage,user);
-            user.state.currentState = States.wait;
-        }
-        else if (user.state.currentState == States.wait) {
-            answer = MessagesFromBot.GetMessage(user.state.currentState);
-            user.state.currentState = States.choose;
+        else if (user.state.currentState == States.wait_for_key) {
+            answer = Anecdotes.FindAnecdote(userMessage, user);
+            answer +="\n\n"+MessagesFromBot.GetMessage(States.wait_for_continuation);
+            user.state.currentState = States.wait_for_choose_type;
         }
         return answer;
     }
-
 }

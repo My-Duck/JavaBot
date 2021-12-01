@@ -17,15 +17,15 @@ public class OldBotLogic implements IBotLogic {
         var state = stateContainer.get(userId);
         if (state.currentState == States.start) {
             answer = OldMessagesFromBot.GetMessage(state.currentState);
-            state.currentState = States.anecdote;
-        } else if (state.currentState == States.anecdote) {
+            state.currentState = States.wait_for_key;
+        } else if (state.currentState == States.wait_for_key) {
             answer = OldAnecdotes.GetAnecdote(Integer.parseInt(message));
             answer += "\n" + OldMessagesFromBot.GetMessage(state.currentState);
-            state.currentState = States.score;
-        }else if (state.currentState == States.score) {
+            state.currentState = States.wait_for_key;
+        }else if (state.currentState == States.wait_for_key) {
             answer = Answers.GetAnswer(Integer.parseInt(message));
             answer += "\n" + OldMessagesFromBot.GetMessage(state.currentState);
-            state.currentState = States.anecdote;
+            state.currentState = States.wait_for_key;
         }
         return answer;
     }
