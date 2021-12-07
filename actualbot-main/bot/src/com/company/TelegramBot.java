@@ -20,18 +20,22 @@ import java.util.Optional;
 public class TelegramBot extends TelegramLongPollingBot {
 
     public IBotLogic logic;
-    public TelegramBot (IBotLogic logic){
+    public String token;
+    public String name;
+    public TelegramBot (String name, String token, IBotLogic logic){
+        this.name = name;
+        this.token = token;
         this.logic = logic;
     }
 
     @Override
     public String getBotUsername() {
-        return "@RCSJBot";
+        return name;
     }
 
     @Override
     public String getBotToken(){
-        return "";
+        return token;
     }
 
 
