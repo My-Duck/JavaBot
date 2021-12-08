@@ -17,7 +17,7 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>com.company.TelegramMain</mainClass>
+                            <mainClass>com.company.Main</mainClass>
                             <name>main</name>
                         </program>
                     </programs>

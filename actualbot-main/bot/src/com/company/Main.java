@@ -6,7 +6,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.awt.*;
 
-public class TelegramMain {
+public class Main {
     @SneakyThrows
     public static void main(String[] args) {
         String botName = System.getenv("BotName");
