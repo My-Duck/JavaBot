@@ -1,20 +1,12 @@
 package com.company;
-import com.company.api.IGetterOfAnecdotesList;
+import com.company.api.IProviderOfAnecdotes;
 import com.company.api.User;
-import lombok.SneakyThrows;
-import org.jsoup.*;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.safety.Whitelist;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 
 public class Anecdotes {
-    public static String GetRandomAnecdote(IGetterOfAnecdotesList getter,String link){
+    public static String GetRandomAnecdote(IProviderOfAnecdotes getter, String link){
         Logger log = Logger.getLogger("1");
         try {
             var anecdotes = getter.getListOfAnecdotes(link);
@@ -29,7 +21,7 @@ public class Anecdotes {
         }
     }
 
-    public static String FindAnecdote(String quote, User user,IGetterOfAnecdotesList getter,String link){
+    public static String FindAnecdote(String quote, User user, IProviderOfAnecdotes getter, String link){
         if (!user.keyWordDict.containsKey(quote))
             user.keyWordDict.put(quote,0);
         else

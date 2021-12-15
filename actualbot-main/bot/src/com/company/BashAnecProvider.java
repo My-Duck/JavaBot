@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.api.IGetterOfAnecdotesList;
+import com.company.api.IProviderOfAnecdotes;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BashAnecProvider implements IGetterOfAnecdotesList {
+public class BashAnecProvider implements IProviderOfAnecdotes {
     @Override
     public ArrayList<String> getListOfAnecdotes(String link) throws IOException {
         Document doc = Jsoup.connect(link).get();

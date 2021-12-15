@@ -4,7 +4,7 @@ package com.company;
 import com.company.api.States;
 
 public class MessagesFromBot {
-    public static String GetMessage(States state) {
+    public static String getMessage(States state) {
         return switch (state) {
             case start -> "Привет. Ecли хочешь прочитать анекдот, напиши \"анекдот\", а если хочешь найти анекдот по ключевому слову напиши \"слово\"";
             case wait_for_choose_type -> "Я вас не понял";
@@ -12,6 +12,6 @@ public class MessagesFromBot {
             case wait_for_key -> "Введите ключевое слово";
             default -> throw new IllegalArgumentException("Unexpected value:" + state);
         };
-        }
+    }
 }
 

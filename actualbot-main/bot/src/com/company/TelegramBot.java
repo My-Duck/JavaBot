@@ -23,12 +23,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     public IBotLogic logic;
     public String token;
     public String name;
-    public String admin;
 
 
-    public TelegramBot(String name, String token, String admin, IBotLogic logic) {
+    public TelegramBot(String name, String token, IBotLogic logic) {
         this.name = name;
-        this.admin = admin;
         this.token = token;
         this.logic = logic;
     }
