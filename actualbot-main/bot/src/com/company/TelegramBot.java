@@ -16,14 +16,19 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 import java.util.Hashtable;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
     public IBotLogic logic;
     public String token;
     public String name;
-    public TelegramBot (String name, String token, IBotLogic logic){
+    public String admin;
+
+
+    public TelegramBot(String name, String token, String admin, IBotLogic logic) {
         this.name = name;
+        this.admin = admin;
         this.token = token;
         this.logic = logic;
     }
@@ -34,28 +39,28 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     @Override
-    public String getBotToken(){
+    public String getBotToken() {
         return token;
     }
 
 
     @SneakyThrows
-    public void messageHandler(Message message){
+    public void messageHandler(Message message) {
         if (message.hasText()) {
-                String id = message.getChatId().toString();
-                execute(
-                        SendMessage.builder()
-                                .text(logic.handleMessage(message.getText(),id))
-                                .chatId(id)
-                                .build());
+            String id = message.getChatId().toString();
+            execute(
+                    SendMessage.builder()
+                            .text(logic.handleMessage(message.getText(), id))
+                            .chatId(id)
+                            .build());
         }
     }
 
     @SneakyThrows
     @Override
     public void onUpdateReceived(Update update) {
-       if (update.hasMessage()){
-           messageHandler(update.getMessage());
-           }
-       }
+        if (update.hasMessage()) {
+            messageHandler(update.getMessage());
+        }
     }
+}

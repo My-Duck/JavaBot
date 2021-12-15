@@ -10,26 +10,43 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 
 public class Anecdotes {
-    @SneakyThrows
     public static String GetRandomAnecdote(IGetterOfAnecdotesList getter,String link){
-        var anecdotes = getter.getListOfAnecdotes(link);
-        var random = (int)(Math.random() * (anecdotes.size()+1));
-        return anecdotes.get(random);
+        Logger log = Logger.getLogger("1");
+        try {
+            var anecdotes = getter.getListOfAnecdotes(link);
+            var random = (int)(Math.random() * (anecdotes.size()+1));
+            return anecdotes.get(random);
+
+        }
+        catch (Exception exception)
+        {
+            log.info("ошибка с пользовательским сообщением : анекдот" );
+            return "Что-то пошло не так";
+        }
     }
-    @SneakyThrows
+
     public static String FindAnecdote(String quote, User user,IGetterOfAnecdotesList getter,String link){
         if (!user.keyWordDict.containsKey(quote))
             user.keyWordDict.put(quote,0);
         else
             user.keyWordDict.put(quote,user.keyWordDict.get(quote)+1);
         var number = user.keyWordDict.get(quote);
-        var anecdotes = getter.getListOfAnecdotes(link + quote);
-        if (number == anecdotes.size())
-            user.keyWordDict.put(quote,0);
-        return anecdotes.get(number);
+        Logger log = Logger.getLogger("2");
+        try {
+            var anecdotes = getter.getListOfAnecdotes(link + quote);
+            if (number == anecdotes.size())
+                user.keyWordDict.put(quote, 0);
+            return anecdotes.get(number);
+        }
+        catch (Exception exception) {
+            log.info("ошибка с пользовательским сообщением : " + quote);
+            return "Что-то пошло не так";
+
+        }
     }
 
 }

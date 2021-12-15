@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GetFromBash implements IGetterOfAnecdotesList {
+public class BashAnecProvider implements IGetterOfAnecdotesList {
     @Override
     public ArrayList<String> getListOfAnecdotes(String link) throws IOException {
         Document doc = Jsoup.connect(link).get();
