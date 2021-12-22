@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.api.*;
 
+import java.io.IOException;
 import java.util.Hashtable;
 
 public class BotLogic implements IBotLogic {
@@ -14,7 +15,7 @@ public class BotLogic implements IBotLogic {
     private IAnecByWordProvider anecByWord;
     private String answer;
     public Hashtable<String, User> userContainer = new Hashtable<String, User>();
-    public String handleMessage(String userMessage, String userId) {
+    public String handleMessage(String userMessage, String userId) throws IOException {
         if (!userContainer.containsKey(userId)) {
             userContainer.put(userId, new User());
         }

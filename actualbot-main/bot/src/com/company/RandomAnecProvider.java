@@ -1,27 +1,21 @@
 package com.company;
 
-import com.company.api.IProviderOfAnecdotes;
+import com.company.api.IAnecdotesProvider;
 import com.company.api.IRandomAnecProvider;
 
-import java.util.logging.Logger;
+import java.io.IOException;
+
 
 public class RandomAnecProvider implements IRandomAnecProvider {
-    public RandomAnecProvider(IProviderOfAnecdotes getter, String link){
+    public RandomAnecProvider(IAnecdotesProvider getter, String link){
         this.getter = getter;
         this.link = link;
     }
-    IProviderOfAnecdotes getter;
+    IAnecdotesProvider getter;
     String link;
-    public String findAnecdote(){
-        Logger log = Logger.getLogger("1");
-        try {
-            var anecdotes = getter.getListOfAnecdotes(link);
-            var random = (int)(Math.random() * (anecdotes.size()+1));
-            return anecdotes.get(random);
-        }
-        catch (Exception exception){
-            log.info("Исключение в случайном анекдоте" );
-            return "Что-то пошло не так";
-        }
+    public String findAnecdote() throws IOException {
+        var anecdotes = getter.getListOfAnecdotes(link);
+        var random = (int)(Math.random() * (anecdotes.size()+1));
+        return anecdotes.get(random);
     }
 }

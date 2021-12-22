@@ -46,11 +46,22 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void messageHandler(Message message) {
         if (message.hasText()) {
             String id = message.getChatId().toString();
-            execute(
-                    SendMessage.builder()
-                            .text(logic.handleMessage(message.getText(), id))
-                            .chatId(id)
-                            .build());
+            Logger log = Logger.getLogger("BotLogic");
+            try {
+                execute(
+                        SendMessage.builder()
+                                .text(logic.handleMessage(message.getText(), id))
+                                .chatId(id)
+                                .build());
+            }
+            catch (Exception e) {
+                log.info("Исключение. Сообщение пользователя: " + message.getText());
+                execute(
+                        SendMessage.builder()
+                                .text("Извините. Что-то пошло не так")
+                                .chatId(id)
+                                .build());
+            }
         }
     }
 
