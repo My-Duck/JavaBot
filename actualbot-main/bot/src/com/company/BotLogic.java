@@ -28,15 +28,32 @@ public class BotLogic implements IBotLogic {
             if (userMessage.equals("анекдот")) {
                 answer.text = randomAnec.findAnecdote();
                 answer.text +="\n\n"+MessagesFromBot.getMessage(States.wait_for_continuation);
+                user.previousChoice = "анекдот";
                 user.state.currentState = States.wait_for_choose_type;
             } else if (userMessage.equals("слово")) {
                 user.state.currentState = States.wait_for_key;
                 answer.text = MessagesFromBot.getMessage(user.state.currentState);
-            } else answer.text = MessagesFromBot.getMessage(user.state.currentState);
+                user.previousChoice = "слово";
+            }
+            else if (userMessage.equals("ещё")){
+                if (user.previousChoice.equals("анекдот")) {
+                    answer.text = randomAnec.findAnecdote();
+                    answer.text += "\n\n" + MessagesFromBot.getMessage(States.wait_for_continuation);
+                    user.state.currentState = States.wait_for_choose_type;
+                }
+                else if (user.previousChoice.equals("слово")){
+                    answer.text = anecByWord.findAnecdote(user.previousQuote, user);
+                    answer.text +="\n\n"+MessagesFromBot.getMessage(States.wait_for_continuation);
+                    user.state.currentState = States.wait_for_choose_type;
+                }
+                else answer.text = MessagesFromBot.getMessage(user.state.currentState);
+            }
+            else answer.text = MessagesFromBot.getMessage(user.state.currentState);
         }
         else if (user.state.currentState == States.wait_for_key) {
             answer.text = anecByWord.findAnecdote(userMessage,user);
             answer.text +="\n\n"+MessagesFromBot.getMessage(States.wait_for_continuation);
+            user.previousQuote = userMessage;
             user.state.currentState = States.wait_for_choose_type;
         }
         answer.prepareAnswer(user.state.currentState);

@@ -14,5 +14,6 @@ public class Keyboard {
 
     public Keyboard() {
         buttons.add(List.of("анекдот", "слово"));
+        buttons.add(List.of("ещё"));
     }
 }
