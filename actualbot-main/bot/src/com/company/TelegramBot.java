@@ -1,21 +1,21 @@
 package com.company;
 
 import com.company.api.IBotLogic;
-import com.company.api.State;
 import lombok.SneakyThrows;
-import org.telegram.telegrambots.bots.DefaultAbsSender;
-import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import java.util.Hashtable;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class TelegramBot extends TelegramLongPollingBot {
@@ -47,14 +47,18 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (message.hasText()) {
             String id = message.getChatId().toString();
             Logger log = Logger.getLogger("BotLogic");
+            ReplyKeyboardMarkup keyboard = null;
             try {
+                Answer answer = logic.handleMessage(message.getText(), id);
+                if (answer.question)
+                    keyboard = getKeyboard(new Keyboard());
                 execute(
                         SendMessage.builder()
-                                .text(logic.handleMessage(message.getText(), id))
+                                .text(answer.text)
+                                .replyMarkup(keyboard)
                                 .chatId(id)
                                 .build());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.info("Исключение. Сообщение пользователя: " + message.getText());
                 execute(
                         SendMessage.builder()
@@ -71,5 +75,23 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage()) {
             messageHandler(update.getMessage());
         }
+    }
+
+
+    public ReplyKeyboardMarkup getKeyboard(Keyboard keyboard){
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setSelective(false);
+        List<KeyboardRow> rowList = new ArrayList<>();
+        for (List<String> list: keyboard.buttons) {
+            KeyboardRow buttonRow = new KeyboardRow();
+            for (String button: list) {
+                buttonRow.add(button);
+            }
+            rowList.add(buttonRow);
+        }
+        replyKeyboardMarkup.setKeyboard(rowList);
+        return replyKeyboardMarkup;
     }
 }

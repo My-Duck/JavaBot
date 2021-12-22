@@ -1,8 +1,9 @@
 package com.company.api;
 
+import com.company.Answer;
+
 import java.io.IOException;
-import java.util.Hashtable;
 
 public interface IBotLogic {
-    String handleMessage(String message,String userID) throws IOException;
+    Answer handleMessage(String message, String userID) throws IOException;
 }
