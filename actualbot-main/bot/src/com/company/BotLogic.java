@@ -25,12 +25,12 @@ public class BotLogic implements IBotLogic {
             user.state.currentState = States.wait_for_choose_type;
         }
         else if (user.state.currentState == States.wait_for_choose_type) {
-            if (userMessage.equals("анекдот")) {
+            if (userMessage.equalsIgnoreCase("анекдот")) {
                 answer.text = randomAnec.findAnecdote();
                 answer.text +="\n\n"+MessagesFromBot.getMessage(States.wait_for_continuation);
                 user.previousChoice = "анекдот";
                 user.state.currentState = States.wait_for_choose_type;
-            } else if (userMessage.equals("слово")) {
+            } else if (userMessage.equalsIgnoreCase("слово")) {
                 user.state.currentState = States.wait_for_key;
                 answer.text = MessagesFromBot.getMessage(user.state.currentState);
                 user.previousChoice = "слово";
